@@ -25,6 +25,7 @@
 					<option value="week">Last Week</option>
 					<option value="month">Last Month</option>
 					<option value="custom">Custom</option>
+					<option value="lastActivity">Last Activity</option>
 				</select>
 			</div>
 
@@ -99,7 +100,7 @@
 	// Reactive form data
 	const formData = ref({
 		repoUrl: '',
-		timeRange: 'day',
+		timeRange: 'lastActivity',
 		musicStyle: 'Rap',
 		instrumental: false,
 		callbackUrl: typeof window !== 'undefined' ? window.location.origin : '',
