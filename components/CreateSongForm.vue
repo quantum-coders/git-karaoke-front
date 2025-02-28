@@ -1,7 +1,12 @@
 <template>
 	<div class="container my-4" style="max-width: 600px;">
 		<h2 class="mb-4 fw-bold">🎤 Create New Song</h2>
-
+		<!-- NEW: Informational alert about generation time -->
+		<div class="alert alert-info mb-4" role="alert">
+			<strong>Important:</strong> The generation process can take several minutes.
+			Please do not close this window or navigate away while your song is being created.
+			You will see real-time status updates: first the lyrics are generated, then the audio is rendered.
+		</div>
 		<!-- FORM -->
 		<form @submit.prevent="handleSubmit" class="row g-3">
 			<!-- Repo URL -->
