@@ -24,7 +24,6 @@
 					<option value="day">Last Day</option>
 					<option value="week">Last Week</option>
 					<option value="month">Last Month</option>
-					<option value="custom">Custom</option>
 					<option value="lastActivity">Last Activity</option>
 				</select>
 			</div>
@@ -32,13 +31,38 @@
 			<!-- Music Style -->
 			<div class="col-6">
 				<label for="musicStyle" class="form-label fw-semibold">Music Style</label>
-				<input
+				<select
 					id="musicStyle"
-					v-model="formData.musicStyle"
+					v-model="selectedStyle"
+					class="form-select"
+					required
+				>
+					<!-- Opción para "elige un estilo" -->
+					<option value="" disabled>-- Select a style --</option>
+
+					<!-- Opciones que vienen de la store (styles) -->
+					<option
+						v-for="(style, index) in storeStyles"
+						:key="index"
+						:value="style"
+					>
+						{{ style }}
+					</option>
+
+					<!-- Opción para custom -->
+					<option value="custom">Other / Custom</option>
+				</select>
+			</div>
+
+			<!-- Input adicional si el usuario selecciona "custom" -->
+			<div class="col-6" v-if="selectedStyle === 'custom'">
+				<label for="customStyle" class="form-label fw-semibold">Custom Style</label>
+				<input
+					id="customStyle"
+					v-model="customStyle"
 					type="text"
 					class="form-control"
-					placeholder="Rap, Rock, etc."
-					required
+					placeholder="e.g. Rap, Death Metal, etc."
 				/>
 			</div>
 
@@ -96,6 +120,8 @@
 	// Access the store
 	const store = useKaraokeStore();
 	const router = useRouter();
+	const selectedStyle = ref('');
+	const customStyle = ref('');
 
 	// Reactive form data
 	const formData = ref({
@@ -112,14 +138,27 @@
 	const createdSongId = computed(() => store.createdSongId);
 	// Nueva: estado parcial de la tarea
 	const currentTaskInfo = computed(() => store.currentTaskInfo);
+	// Computed para estilos que vienen del store
+	const storeStyles = computed(() =>
+		store.styles && store.styles.length
+			? store.styles
+			: [ 'Rap', 'Rock', 'Pop' ], // valores por defecto si no hay nada en la store
+	);
 
 	// Submit
 	async function handleSubmit() {
+		formData.value.musicStyle =
+			selectedStyle.value === 'custom' ? customStyle.value : selectedStyle.value;
 		await store.createSongAndPoll(formData.value);
 	}
 
-	onBeforeMount(() => {
+	onBeforeMount(async () => {
 		store.resetStoreState();
+		try {
+			await store.fetchStyles(); // si tienes un endpoint para obtener estilos
+		} catch(err) {
+			console.error(err);
+		}
 	});
 
 	const pollingMessage = computed(() => {
