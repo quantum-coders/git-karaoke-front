@@ -1,5 +1,5 @@
 <template>
-	<div class="container my-4" style="max-width: 600px;">
+	<div class="my-4" style="max-width: 600px;">
 		<h2 class="mb-4 fw-bold">🎤 Create New Song</h2>
 		<!-- NEW: Informational alert about generation time -->
 		<div class="alert alert-info mb-4" role="alert">

@@ -1,20 +1,27 @@
 <template>
-	<div class="container my-5">
+	<div class="container pt-5 my-5">
 		<!-- HERO SECTION -->
 		<section class="hero text-center py-5 mb-5">
 			<div class="overlay"></div>
 			<div class="position-relative">
 				<h1 class="display-3 fw-bold text-white">
-					<icon name="mdi:github" class="me-2" />
+					<svgo-octocat class="logo" />
 					Git Karaoke
 				</h1>
 				<p class="lead text-white mt-3">
 					Transform your GitHub repository history into an immersive, AI-generated musical experience!
 				</p>
-				<NuxtLink to="/create" class="btn btn-danger btn-lg mt-4">
-					<icon name="mdi:play-circle-outline" class="me-2" />
-					Create Your Song Now
-				</NuxtLink>
+
+				<p class="text-center mb-0">
+					<fancy-button @click.prevent="useRouter().push('/create')">
+						<span class="d-flex align-items-center">
+							<span class="icon p-3">
+								<icon name="material-symbols:add-diamond" />
+							</span>
+							<span class="p-3">Create a New Song</span>
+						</span>
+					</fancy-button>
+				</p>
 			</div>
 		</section>
 
@@ -147,11 +154,30 @@
 	// No additional imports needed for icons if you're using Nuxt Icons globally
 </script>
 
+<style lang="sass" scoped>
+	.logo
+		width: 150px
+		height: 150px
+		margin-bottom: 1rem
+
+	.icon
+		border-right: 2px solid #9140F9
+		transition: all 300ms
+
+	button:hover .icon
+		border-color: transparent
+</style>
+
 <style scoped>
 	.hero {
+		border-radius: 2rem;
+		overflow: hidden;
 		position: relative;
-		background: url('/hero-background-2.jpg') center center no-repeat;
+		background: url('/images/karaoke2.jpg') center center no-repeat;
 		background-size: cover;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		/* Reducimos la altura de 80vh a 50vh para hacer la imagen más pequeña */
 		min-height: 50vh;
 	}

@@ -1,5 +1,5 @@
 <template>
-	<div class="karaoke-song-detail container-fluid py-4 text-white position-relative">
+	<div class="karaoke-song-detail py-4 position-relative">
 		<!-- Subtle radial background -->
 		<div class="karaoke-bg"></div>
 
@@ -183,7 +183,7 @@
 							class="bg-secondary bg-opacity-25 p-2 mb-3 rounded"
 						>
 							<div class="d-flex justify-content-between align-items-center">
-								<span>
+								<span class="filename">
 									<icon name="material-symbols:headphones" class="me-1" />
 									{{ audio.filename }}
 								</span>
@@ -206,14 +206,14 @@
 		<!-- Pinned Mini Player at the Bottom -->
 		<div
 			v-if="pinnedAudioFile"
-			class="pinned-player bg-dark text-white p-3 d-flex align-items-center justify-content-between"
+			class="pinned-player bg-dark text-white p-1 d-flex gap-1 flex-column align-items-start justify-content-between"
 		>
 			<div>
 				<icon name="material-symbols:headphones" class="me-2" />
 				<strong>{{ pinnedAudioFile.filename }}</strong>
 			</div>
 			<!-- The same AudioPlayer, but we also listen to 'timeupdate' & 'loadedmetadata' here -->
-			<AudioPlayer
+			<audio-player
 				:src="pinnedAudioFile.url"
 				:title="song.title"
 				@timeupdate="onTimeUpdate"
@@ -224,7 +224,6 @@
 </template>
 
 <script setup>
-
 
 	const props = defineProps({
 		song: {
@@ -289,19 +288,24 @@
 	}
 </script>
 
+<style lang="sass" scoped>
+
+	.filename
+		display: block
+		overflow: hidden
+		text-overflow: ellipsis
+		white-space: nowrap
+
+	audio
+		width: 100%
+
+</style>
+
 <style scoped>
 	.karaoke-song-detail {
 		position: relative;
-		color: #fff;
+		color: black;
 		min-height: 100vh;
-	}
-
-	.karaoke-bg {
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		background: radial-gradient(circle at center, #1f1f1f 0%, #000 80%);
-		opacity: 0.6;
 	}
 
 	/* Lyric lines with fade-in and an .active highlight */
@@ -329,10 +333,9 @@
 
 	.pinned-player {
 		position: fixed;
-		bottom: 0;
+		bottom: 40px;
 		right: 0;
 		width: 100%;
-		max-width: 600px;
 		border-top: 2px solid #444;
 		z-index: 999;
 	}

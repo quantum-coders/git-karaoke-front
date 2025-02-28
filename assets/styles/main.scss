@@ -5,7 +5,6 @@
 @import "bootstrap/scss/variables";
 @import "@near-wallet-selector/modal-ui/styles.css";
 
-
 $brand-colors: (
 	"brand1": $primary,
 	"brand2": $secondary,
@@ -28,15 +27,13 @@ $theme-colors: map-merge($theme-colors, $brand-colors);
 	--brand2-rgba: 204, 42, 65;
 }
 
-#near-wallet-selector-modal {
 
-	--secondary-button-bg-color: transparent;
-	--secondary-button-border-color: #{$brand2};
-	--secondary-button-text-color: #{$brand2};
+$hamburger-padding-x: 16px;
+$hamburger-padding-y: 16px;
+$hamburger-layer-width: 25px;
+$hamburger-layer-height: 2px;
+$hamburger-layer-spacing: 5px;
+$hamburger-layer-color: white;
+$hamburger-types: (emphatic);
 
-	--gradient-dark-icon: #{$brand2};
-	--selected-wallet-bg: #{$brand1};
-	--wallet-option-outline-color: #{$brand2};
-	--wallet-selector-selected-wallet-bg: #{$brand1};
-	--wallet-selector-wallet-option-bg-hover: rgba(var(--brand2-rgba), 0.25);
-}
+@import "hamburgers/_sass/hamburgers/hamburgers";
