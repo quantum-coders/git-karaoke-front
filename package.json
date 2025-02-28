@@ -1,0 +1,48 @@
+{
+	"name": "nuxt-app",
+	"private": true,
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"start": "node .output/server/index.mjs"
+	},
+	"dependencies": {
+		"@nuxt/icon": "^1.0.0",
+		"@googlemaps/js-api-loader": "^1.16.8",
+		"@near-wallet-selector/coin98-wallet": "^8.9.14",
+		"@near-wallet-selector/core": "^8.9.14",
+		"@near-wallet-selector/default-wallets": "^8.1.4",
+		"@near-wallet-selector/here-wallet": "^8.9.14",
+		"@near-wallet-selector/ledger": "^8.9.14",
+		"@near-wallet-selector/math-wallet": "^8.9.14",
+		"@near-wallet-selector/meteor-wallet": "^8.9.14",
+		"@near-wallet-selector/modal-ui": "^8.9.14",
+		"@near-wallet-selector/my-near-wallet": "^8.9.14",
+		"@near-wallet-selector/near-wallet": "^8.9.3",
+		"@near-wallet-selector/nearfi": "^8.9.14",
+		"@near-wallet-selector/nightly-connect": "^8.7.0",
+		"@near-wallet-selector/sender": "^8.9.14",
+		"@near-wallet-selector/wallet-connect": "^8.9.14",
+		"@nuxtjs/google-fonts": "^3.2.0",
+		"@thewebchimp/chimp-nuxt-layer": "^0.0.31",
+		"@vueuse/core": "^11.1.0",
+		"buffer": "^6.0.3",
+		"change-case": "^5.4.4",
+		"eventemitter3": "^5.0.1",
+		"flatted": "^3.3.1",
+		"moment": "^2.30.1",
+		"near-api-js": "^5.0.1",
+		"nuxt": "^3.13.2",
+		"nuxt-swiper": "^1.2.2",
+		"pinia": "^2.2.4",
+		"vue": "latest",
+		"vue-router": "latest",
+		"vue-waypoint": "^4.3.0",
+		"vue3-range-calendar": "^0.3.3"
+
+	},
+	"packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+}

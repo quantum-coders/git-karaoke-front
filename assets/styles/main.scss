@@ -1,0 +1,42 @@
+/*Variables
+--------------------------------------------------------------------------------------------------------------------- */
+@import "base.variables";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "@near-wallet-selector/modal-ui/styles.css";
+
+
+$brand-colors: (
+	"brand1": $primary,
+	"brand2": $secondary,
+	"primary": $primary,
+	"secondary": $secondary
+);
+
+$theme-colors: map-merge($theme-colors, $brand-colors);
+
+@import "bootstrap/scss/bootstrap";
+@import "project";
+
+:root {
+	--dashboard-sidebar-width: 250px;
+
+	--brand1: #{$brand1};
+	--brand2: #{$brand2};
+
+	--brand1-rgba: 53, 19, 48;
+	--brand2-rgba: 204, 42, 65;
+}
+
+#near-wallet-selector-modal {
+
+	--secondary-button-bg-color: transparent;
+	--secondary-button-border-color: #{$brand2};
+	--secondary-button-text-color: #{$brand2};
+
+	--gradient-dark-icon: #{$brand2};
+	--selected-wallet-bg: #{$brand1};
+	--wallet-option-outline-color: #{$brand2};
+	--wallet-selector-selected-wallet-bg: #{$brand1};
+	--wallet-selector-wallet-option-bg-hover: rgba(var(--brand2-rgba), 0.25);
+}
