@@ -26,7 +26,7 @@
 				<div class="card bg-dark mb-4 shadow-sm">
 					<div class="card-header text-white d-flex align-items-center">
 						<icon name="material-symbols:lyrics" class="me-2" />
-						Karaoke Lyrics (Approx)
+						Karaoke Lyrics
 					</div>
 					<div class="card-body">
 						<p class="text-white small fst-italic">
