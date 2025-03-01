@@ -10,6 +10,7 @@
 		"start": "node .output/server/index.mjs"
 	},
 	"dependencies": {
+		"@futuremeng/vue3-wave-audio-player": "^3.4.4",
 		"@googlemaps/js-api-loader": "^1.16.8",
 		"@near-wallet-selector/coin98-wallet": "^8.9.14",
 		"@near-wallet-selector/core": "^8.9.14",
@@ -35,14 +36,15 @@
 		"flatted": "^3.3.1",
 		"hamburgers": "^1.2.1",
 		"moment": "^2.30.1",
+		"moment-timezone": "^0.5.47",
 		"near-api-js": "^5.0.1",
 		"nuxt": "^3.13.2",
 		"nuxt-swiper": "^1.2.2",
 		"pinia": "^2.2.4",
 		"vue": "latest",
 		"vue-router": "latest",
-		"vue-waypoint": "^4.3.0",
-		"vue3-range-calendar": "^0.3.3"
+		"vue-sound": "^0.1.10",
+		"vue-waypoint": "^4.3.0"
 	},
 	"packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }

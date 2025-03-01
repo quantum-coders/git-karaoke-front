@@ -2,10 +2,17 @@
 	<div class="landing-page">
 		<!-- HERO SECTION -->
 		<section class="hero-section d-flex align-items-center justify-content-center position-relative">
-			<!-- Overlay para oscurecer el fondo -->
-			<div class="hero-overlay"></div>
+			<div class="hero-overlay" />
+			<div class="video-wrapper">
+				<iframe
+					class="video"
+					src="https://player.vimeo.com/video/1061567470?background=1"
+					frameborder="0"
+					allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+				></iframe>
+			</div>
 			<div class="container text-center position-relative">
-				<img src="/images/octocat.png" class="logo" />
+				<img src="/images/octocat.png" class="logo" alt="Git Karaoke" />
 				<h1 class="title text-white">Git Karaoke</h1>
 				<p class="lead text-white mt-3">
 					Transform your GitHub repo history into AI-generated music that rocks!
@@ -34,10 +41,9 @@
 			</div>
 		</section>
 
-		<!-- LATEST SONGS SECTION -->
 		<section class="py-5">
 			<div class="container">
-				<h2 class="mb-4 text-center">Latest Songs</h2>
+				<h2 class="songs-title mb-4 text-center">Latest Songs</h2>
 
 				<div v-if="isLoading" class="text-center my-5">
 					<div class="spinner-border text-primary" role="status">
@@ -47,12 +53,17 @@
 
 				<div v-else>
 					<!-- Se utiliza el componente SongList para mostrar las canciones -->
-					<SongList :songs="recentSongs" />
+					<song-list :songs="recentSongs" />
 
-					<div class="mt-4 text-end">
-						<nuxt-link to="/karaoke" class="btn btn-outline-primary">
-							<i class="bi bi-arrow-right-circle me-1"></i> View All Songs
-						</nuxt-link>
+					<div class="mt-4 text-center">
+						<fancy-button @click.prevent="useRouter().push('/karaoke')">
+							<span class="d-flex align-items-center">
+								<span class="icon p-3">
+									<icon name="material-symbols:emoji-people" />
+								</span>
+								<span class="p-3">View all songs</span>
+							</span>
+						</fancy-button>
 					</div>
 				</div>
 			</div>
@@ -85,6 +96,22 @@
 </script>
 
 <style lang="sass" scoped>
+
+	.video-wrapper
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		padding-top: 56.25%
+
+		.video
+			position: absolute
+			top: 0
+			left: 0
+			width: 100%
+			height: 100%
+
 	.logo
 		width: 150px
 		height: 150px
@@ -96,36 +123,30 @@
 
 	button:hover .icon
 		border-color: transparent
-</style>
 
-<style scoped>
-	.hero-section {
-		min-height: 80vh;
-		background: black url('/images/karaoke2.jpg') no-repeat center center;
-		position: relative;
-	}
+	.hero-section
+		min-height: 80vh
+		background: black
+		position: relative
+		overflow: hidden
 
-	.lead {
+		.lead
+			width: 300px
+			margin: 0 auto
 
-		width: 300px;
-		margin: 0 auto;
-	}
+		.hero-overlay
+			position: absolute
+			top: 0
+			left: 0
+			width: 100%
+			height: 100%
+			background: rgba(0, 0, 0, 0.25)
+			z-index: 1
 
-	.hero-overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: rgba(0, 0, 0, 0.25); /* Overlay oscuro para resaltar el texto */
-		z-index: 1;
-	}
+	.hero-section .container
+		z-index: 2
 
-	.hero-section .container {
-		z-index: 2;
-	}
-
-	.landing-page {
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	}
+	.songs-title
+		font-size: 1.5rem
+		color: #333
 </style>

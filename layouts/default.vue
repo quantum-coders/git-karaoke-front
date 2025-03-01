@@ -76,13 +76,11 @@
 		</div>
 
 		<!-- Overlay behind the drawer -->
-		<transition name="drawer-overlay">
-			<div
-				v-if="drawerOpen"
-				class="drawer-overlay position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"
-				@click="toggleDrawer"
-			/>
-		</transition>
+		<div
+			:class="{ 'is-open': drawerOpen }"
+			class="drawer-overlay"
+			@click="toggleDrawer"
+		/>
 
 		<!-- Main Content -->
 		<main class="section-content flex-grow-1 overflow-auto pretty-scrolls">
@@ -90,8 +88,9 @@
 		</main>
 
 		<!-- Footer -->
-		<footer class="bg-dark text-center text-white py-2">
+		<footer class="text-center text-white p-2 d-flex justify-content-between">
 			<small>© 2025 My Git Karaoke</small>
+			<small>By Quantum Coders</small>
 		</footer>
 	</div>
 </template>
@@ -116,6 +115,9 @@
 </script>
 
 <style lang="sass" scoped>
+	footer
+		background: black
+
 	.navbar
 		position: fixed
 		top: 0
@@ -142,10 +144,26 @@
 		top: 0.125rem
 		z-index: 3000
 
+	.drawer-overlay
+		z-index: 1999
+		pointer-events: none
+		cursor: pointer
+		position: fixed
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		background: rgba(black, 0.5)
+		transition: opacity 0.3s ease
+		opacity: 0
+
+		&.is-open
+			opacity: 1
+			pointer-events: all
+
 	.drawer
 		width: 400px
-		background: rgba(black, 0.5)
-		// glass background
+		background: rgba(black, 0.85)
 		backdrop-filter: blur(10px)
 		z-index: 2000
 		margin-left: -400px

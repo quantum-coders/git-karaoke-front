@@ -37,3 +37,67 @@ $hamburger-layer-color: white;
 $hamburger-types: (emphatic);
 
 @import "hamburgers/_sass/hamburgers/hamburgers";
+
+:root {
+	--player-background: black;
+	--player-font-size: 0.9rem;
+	--player-font-size-small: 0.7rem;
+	--player-font-weight: 300;
+	--player-font-weight-bold: 600;
+	--player-text-color: white;
+	--player-icon-color: white;
+	--player-link-color: var(--player-text-color);
+	--player-progress-color: var(--brand2);
+	--player-buffered-color: var(--brand2);
+	--player-seeker-color: white;
+	--player-input-range-color: var(--player-text-color);
+}
+
+@import 'vue-sound/style.css';
+
+.vue-sound {
+
+	.player {
+		padding: 0;
+
+		.player-controls {
+
+			.player-track {
+				padding: 0.5rem 1rem 0;
+			}
+
+			.player-back-15-icon,
+			.player-ahead-15-icon {
+
+				width: 0.8rem;
+				aspect-ratio: 1;
+				cursor: pointer;
+			}
+
+			.player-play-pause-icon,
+			.player-download-icon,
+			.player-volume-icon {
+
+				width: 1.2rem;
+				aspect-ratio: 1;
+				cursor: pointer;
+			}
+
+			.player-back-15-icon,
+			.player-ahead-15-icon,
+			.player-play-pause-icon,
+			.player-download-icon,
+			.player-volume-icon {
+
+				&:hover {
+					svg path {
+
+						fill: var(--brand2);
+					}
+				}
+			}
+		}
+
+	}
+
+}

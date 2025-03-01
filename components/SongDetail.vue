@@ -1,21 +1,28 @@
 <template>
 	<div class="karaoke-song-detail py-4 position-relative">
-		<!-- Subtle radial background -->
-		<div class="karaoke-bg"></div>
-
 		<!-- Header: Title and Status -->
-		<div class="row align-items-center mb-3">
-			<div class="col">
-				<h1 class="fw-bold mb-0 d-flex align-items-center">
-					<icon name="material-symbols:music-note" class="me-2" />
-					{{ song.title }}
-				</h1>
-				<small class="text-muted">Song ID: {{ song.id }}</small>
+		<div class="song-title mb-3 d-flex align-items-start justify-content-between">
+			<div class="song-title-wrapper d-flex align-items-center gap-1">
+				<img
+					:src="song.cover_image_url"
+					alt="Cover"
+				/>
+				<div>
+					<h1>{{ song.title }}</h1>
+					<div class="d-flex align-items-center gap-2 ps-2">
+						<span class="badge bg-success">{{ song.status.toUpperCase() }}</span>
+						<span class="badge bg-secondary">{{ song.style }}</span>
+						<small class="text-muted">Song ID: {{ song.id }}</small>
+					</div>
+				</div>
 			</div>
-			<div class="col-auto text-end">
-				<span class="badge bg-success me-2">{{ song.status.toUpperCase() }}</span>
-				<span class="badge bg-secondary">{{ song.style }}</span>
-			</div>
+
+			<button
+				class="btn btn-outline-secondary"
+				@click="reloadSong"
+			>
+				Reload Song
+			</button>
 		</div>
 
 		<!-- 2-column layout: LEFT = lyrics w/ highlight, RIGHT = meta info -->
@@ -23,7 +30,7 @@
 			<!-- LEFT COLUMN: Karaoke lyrics (approx highlight) -->
 			<div class="col-12 col-lg-7">
 				<!-- Approx Karaoke Card -->
-				<div class="card bg-dark mb-4 shadow-sm">
+				<div class="card">
 					<div class="card-header text-white d-flex align-items-center">
 						<icon name="material-symbols:lyrics" class="me-2" />
 						Karaoke Lyrics
@@ -49,7 +56,7 @@
 				<!-- Commits in Range -->
 				<div
 					v-if="song.commitsInRange && song.commitsInRange.length"
-					class="card bg-dark mb-4 shadow-sm"
+					class="card mb-4 shadow-sm"
 				>
 					<div class="card-header text-white d-flex align-items-center">
 						<icon name="material-symbols:commit" class="me-2" />
@@ -75,7 +82,7 @@
 				<!-- Analysis Tasks -->
 				<div
 					v-if="song.analysis_tasks && song.analysis_tasks.length"
-					class="card bg-dark mb-4 shadow-sm"
+					class="card mb-4 shadow-sm"
 				>
 					<div class="card-header text-white d-flex align-items-center">
 						<icon name="material-symbols:analysis" class="me-2" />
@@ -99,17 +106,13 @@
 			<!-- RIGHT COLUMN: Repo, Time Range, Cover, Extra Info, Additional Audio -->
 			<div class="col-12 col-lg-5">
 				<!-- Repository Info -->
-				<div class="card bg-dark mb-4 shadow-sm text-white">
-					<div class="card-header d-flex align-items-center text-white">
-						<icon name="mdi:github" class="me-2" />
-						Repository
-					</div>
-					<div class="card-body text-white">
-						<p class="h5 mb-1">{{ song.repository.full_name }}</p>
-						<p class=" mb-2 text-white">
-							Owner: {{ song.repository.owner }}<br />
-							Private: {{ song.repository.is_private ? 'Yes' : 'No' }}
-						</p>
+				<div class="card mb-4 shadow-sm text-white">
+					<div class="card-header d-flex align-items-center justify-content-between">
+						<div class="d-flex align-items-center gap-2">
+							<icon name="mdi:github" />
+							Repository
+						</div>
+
 						<a
 							:href="song.repository.url"
 							target="_blank"
@@ -119,25 +122,51 @@
 							Open Repo
 						</a>
 					</div>
+					<div class="card-body text-white">
+						<p class="h5 mb-1">{{ song.repository.full_name }}</p>
+						<div class="row">
+							<div class="col-6">
+								<div class="data-chunk">
+									<strong>Owner</strong> {{ song.repository.owner }}
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="data-chunk">
+									<strong>Private</strong> {{ song.repository.is_private ? 'Yes' : 'No' }}
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<!-- Time Range & Commits -->
-				<div class="card bg-dark mb-4 shadow-sm text-white">
+				<div class="card time-range mb-4 shadow-sm text-white">
 					<div class="card-header text-white d-flex align-items-center">
 						<icon name="material-symbols:timer" class="me-2" />
 						Time Range & Commits
 					</div>
 					<div class="card-body text-white">
-						<p class="mb-1">
-							<strong>Start:</strong> {{ song.time_range?.start }}
-						</p>
-						<p class="mb-1">
-							<strong>End:</strong> {{ song.time_range?.end }}
-						</p>
-						<p class="mb-1">
-							<icon name="material-symbols:commit" class="me-1" />
-							<strong>Commits:</strong> {{ song.commit_count }}
-						</p>
+						<div class="row">
+							<div class="col-6">
+								<div class="data-chunk">
+									<strong>Start</strong> {{ moment(song.time_range?.start).format('lll') }}
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="data-chunk">
+									<strong>End</strong> {{ moment(song.time_range?.end).format('lll') }}
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="data-chunk">
+									<div class="d-flex align-items-center">
+										<icon name="material-symbols:commit" class="me-1" />
+										<strong>Commits</strong>
+									</div>
+									{{ song.commit_count }} commit{{ song.commit_count > 1 ? 's' : '' }}
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -146,31 +175,14 @@
 					<img
 						:src="song.cover_image_url"
 						alt="Cover"
-						class="img-fluid cover-img"
+						class="img-fluid cover-image w-100"
 					/>
-				</div>
-
-				<!-- Extra Info -->
-				<div class="card bg-dark mb-4 shadow-sm text-white">
-					<div class="card-header text-white d-flex align-items-center">
-						<icon name="material-symbols:info" class="me-2" />
-						Extra Info
-					</div>
-					<div class="card-body">
-						<ul class="list-unstyled mb-1">
-							<li><strong>Created At:</strong> {{ song.created_at }}</li>
-							<li><strong>Updated At:</strong> {{ song.updated_at }}</li>
-							<li><strong>Completed At:</strong> {{ song.completed_at }}</li>
-							<li><strong>Suno Task ID:</strong> {{ song.suno_task_id }}</li>
-							<li><strong>Instrumental:</strong> {{ song.instrumental ? 'Yes' : 'No' }}</li>
-						</ul>
-					</div>
 				</div>
 
 				<!-- Additional Audio Files -->
 				<div
 					v-if="otherAudioFiles.length"
-					class="card bg-dark mb-4 shadow-sm text-white"
+					class="card mb-4 shadow-sm text-white"
 				>
 					<div class="card-header text-white">
 						<icon name="material-symbols:playlist-play" class="me-2" />
@@ -180,7 +192,6 @@
 						<div
 							v-for="audio in otherAudioFiles"
 							:key="audio.id"
-							class="bg-secondary bg-opacity-25 p-2 mb-3 rounded"
 						>
 							<div class="d-flex justify-content-between align-items-center">
 								<span class="filename">
@@ -191,12 +202,55 @@
 									{{ audio.file_type.toUpperCase() }}
 								</small>
 							</div>
-							<!-- Basic AudioPlayer or your pinned approach -->
-							<AudioPlayer
+
+							<vue-sound
+								show-download
+								:file="audio.url"
+							/>
+
+							<!--<AudioPlayer
 								:src="audio.url"
 								:title="song.title"
 								class="mt-2"
-							/>
+							/>-->
+						</div>
+					</div>
+				</div>
+
+				<!-- Extra Info -->
+				<div class="card extra-info mb-4 shadow-sm text-white">
+					<div class="card-header text-white d-flex align-items-center">
+						<icon name="material-symbols:info" class="me-2" />
+						Extra Info
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-6">
+								<div class="data-chunk">
+									<strong>Created</strong> {{ moment(song.created_at).format('lll') }}
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="data-chunk">
+									<strong>Updated</strong> {{ moment(song.updated_at).format('lll') }}
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="data-chunk">
+									<strong>Completed</strong>
+									{{ song.completed_at ? moment(song.completed_at).format('lll') : 'N/A' }}
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="data-chunk">
+									<strong>Task ID</strong> {{ song.suno_task_id }}
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="data-chunk">
+									<strong>Instrumental</strong> {{ song.instrumental ? 'Yes' : 'No' }}
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -206,24 +260,32 @@
 		<!-- Pinned Mini Player at the Bottom -->
 		<div
 			v-if="pinnedAudioFile"
-			class="pinned-player bg-dark text-white p-1 d-flex gap-1 flex-column align-items-start justify-content-between"
+			class="pinned-player"
 		>
 			<div>
 				<icon name="material-symbols:headphones" class="me-2" />
 				<strong>{{ pinnedAudioFile.filename }}</strong>
 			</div>
+
+			<vue-sound
+				show-download
+				:file="pinnedAudioFile.url"
+			/>
+
 			<!-- The same AudioPlayer, but we also listen to 'timeupdate' & 'loadedmetadata' here -->
-			<audio-player
+			<!--<audio-player
 				:src="pinnedAudioFile.url"
 				:title="song.title"
 				@timeupdate="onTimeUpdate"
 				@loadedmetadata="onLoadedMetadata"
-			/>
+			/>-->
 		</div>
 	</div>
 </template>
 
 <script setup>
+	import { VueSound } from 'vue-sound';
+	import moment from 'moment-timezone';
 
 	const props = defineProps({
 		song: {
@@ -231,6 +293,8 @@
 			required: true,
 		},
 	});
+
+	const emit = defineEmits([ 'reload' ]);
 
 	// SPLIT LYRICS
 	const splittedLyrics = computed(() => {
@@ -286,9 +350,38 @@
 			animationDelay: `${ delaySec }s`,
 		};
 	}
+
+	function reloadSong() {
+		emit('reload');
+	}
 </script>
 
 <style lang="sass" scoped>
+
+	.song-title
+		.song-title-wrapper
+			h1
+				font-size: 2rem
+
+			img
+				width: 80px
+				height: 80px
+				object-fit: cover
+				border-radius: 6px
+
+	.data-chunk
+		margin-bottom: 0.5rem
+
+		strong
+			font-size: 0.75rem
+			display: block
+			font-weight: normal
+
+	.card
+		background: black
+
+	.card-header
+		border-bottom: 1px solid rgba(255, 255, 255, 0.25)
 
 	.filename
 		display: block
@@ -299,56 +392,39 @@
 	audio
 		width: 100%
 
-</style>
+	.karaoke-song-detail
+		position: relative
+		color: black
+		min-height: 100vh
 
-<style scoped>
-	.karaoke-song-detail {
-		position: relative;
-		color: black;
-		min-height: 100vh;
-	}
+	.karaoke-line
+		opacity: 0
+		animation: fadeInLine 0.8s forwards ease-out
+		margin-bottom: 4px
+		transition: background-color 0.2s, transform 0.2s, text-shadow 0.2s
 
-	/* Lyric lines with fade-in and an .active highlight */
-	.karaoke-line {
-		opacity: 0;
-		animation: fadeInLine 0.8s forwards ease-out;
-		margin-bottom: 4px;
-		transition: background-color 0.2s, transform 0.2s, text-shadow 0.2s;
-	}
+		&.active
+			background-color: rgba(255, 255, 255, 0.15)
+			text-shadow: 0 0 8px #fff
+			transform: scale(1.03)
+			font-weight: bold
+			border-radius: 4px
 
-	/* Staggered delay logic => see getLineStyle() for dynamic style */
-	.karaoke-line.active {
-		background-color: rgba(255, 255, 255, 0.15);
-		text-shadow: 0 0 8px #fff;
-		transform: scale(1.03);
-		font-weight: bold;
-		border-radius: 4px;
-	}
+	.pinned-player
+		position: fixed
+		bottom: 37px
+		right: 0
+		padding: 0.5rem
+		width: 100%
+		z-index: 999
+		color: white
+		background: black
 
-	@keyframes fadeInLine {
-		to {
-			opacity: 1;
-		}
-	}
+	.cover-image
+		border: 1px solid #fff
+		border-radius: 6px
 
-	.pinned-player {
-		position: fixed;
-		bottom: 40px;
-		right: 0;
-		width: 100%;
-		border-top: 2px solid #444;
-		z-index: 999;
-	}
-
-	@media (max-width: 768px) {
-		.pinned-player {
-			max-width: 100%;
-		}
-	}
-
-	.cover-img {
-		max-width: 400px;
-		border: 1px solid #fff;
-		border-radius: 6px;
-	}
+	@keyframes fadeInLine
+		to
+			opacity: 1
 </style>

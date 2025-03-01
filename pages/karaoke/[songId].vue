@@ -13,15 +13,15 @@
 		</div>
 		<div v-else>
 			<!-- Detailed Song Info -->
-			<song-detail :song="currentSong" />
+			<song-detail :song="currentSong" @reload="reloadSong" />
 
-			<hr class="my-4" />
+			<!--<hr class="my-4" />
 			<button
 				class="btn btn-outline-secondary"
 				@click="reloadSong"
 			>
 				Reload Song
-			</button>
+			</button>-->
 		</div>
 	</div>
 </template>
