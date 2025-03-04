@@ -36,6 +36,8 @@
 						Karaoke Lyrics
 					</div>
 					<div class="card-body">
+						<canvas class="wave-visualizer" />
+
 						<p class="text-white small fst-italic">
 							Each line highlights for an equal slice of the audio's total duration.
 						</p>
@@ -296,19 +298,16 @@
 
 	const emit = defineEmits([ 'reload' ]);
 
-	// SPLIT LYRICS
 	const splittedLyrics = computed(() => {
 		if(!props.song.lyrics) return [];
 		return props.song.lyrics.split('\n');
 	});
 
-	// PINNED AUDIO => FIRST FILE
 	const pinnedAudioFile = computed(() => {
 		const f = props.song.audio_files;
 		return (f && f.length) ? f[0] : null;
 	});
 
-	// OTHER AUDIO
 	const otherAudioFiles = computed(() => {
 		const f = props.song.audio_files;
 		if(!f || f.length < 2) return [];
@@ -321,18 +320,16 @@
 	const currentLineIndex = ref(-1);
 
 	/** Called from AudioPlayer when metadata loaded => get total duration */
-	function onLoadedMetadata(dur) {
-		totalDuration.value = dur;
-	}
+	const onLoadedMetadata = (dur) => { totalDuration.value = dur; };
 
 	/** Called from AudioPlayer on each timeupdate => approximate highlight */
-	function onTimeUpdate(time) {
+	const onTimeUpdate = (time) => {
 		currentTime.value = time;
 		approximateHighlight();
-	}
+	};
 
 	/** Approximate highlight => each line = totalDuration / lineCount */
-	function approximateHighlight() {
+	const approximateHighlight = () => {
 		const lines = splittedLyrics.value;
 		if(!lines.length || !totalDuration.value) {
 			currentLineIndex.value = -1;
@@ -341,19 +338,15 @@
 		const lineDuration = totalDuration.value / lines.length;
 		const i = Math.floor(currentTime.value / lineDuration);
 		currentLineIndex.value = Math.min(i, lines.length - 1);
-	}
+	};
 
 	/** For fade-in lines (like your old snippet) => each line has a small delay. */
-	function getLineStyle(idx) {
+	const getLineStyle = (idx) => {
 		const delaySec = 0.1 + idx * 0.05;
-		return {
-			animationDelay: `${ delaySec }s`,
-		};
-	}
+		return { animationDelay: `${ delaySec }s` };
+	};
 
-	function reloadSong() {
-		emit('reload');
-	}
+	const reloadSong = () => { emit('reload'); };
 </script>
 
 <style lang="sass" scoped>

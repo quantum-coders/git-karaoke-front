@@ -10,6 +10,7 @@
 		"start": "node .output/server/index.mjs"
 	},
 	"dependencies": {
+		"@foobar404/wave": "^2.0.5",
 		"@futuremeng/vue3-wave-audio-player": "^3.4.4",
 		"@googlemaps/js-api-loader": "^1.16.8",
 		"@near-wallet-selector/coin98-wallet": "^8.9.14",

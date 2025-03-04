@@ -197,17 +197,6 @@
 		z-index: 2;
 	}
 
-	/* Títulos */
-	h1,
-	h2 {
-		font-family: 'Montserrat', sans-serif;
-	}
-
-	/* Para ajustar el tamaño de texto donde se necesite */
-	.fs-5 {
-		font-size: 1.25rem;
-	}
-
 	/* Animación al hover de botones */
 	.btn:hover {
 		transform: scale(1.05);
