@@ -26,7 +26,8 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             apiURL: process.env.BASE_URL || 'http://localhost:1337',
-            appURL: process.env.APP_URL || 'http://localhost:3000'
+            appURL: process.env.APP_URL || 'http://localhost:3000',
+            demoAccessKey: process.env.DEMO_ACCESS_KEY || 'QqAm8VfmayhQjxtuGozhqzKgmo0G'
         },
     },
     vite: {
