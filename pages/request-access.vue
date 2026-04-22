@@ -1,165 +1,159 @@
 <template>
 	<div class="access-wrapper">
+		<div class="access-bg"></div>
 		<div class="access-card">
-			<div class="access-icon">🎤</div>
-			<h1 class="access-title">Git Karaoke</h1>
-			<p class="access-subtitle">Private demo — access required</p>
+			<img src="/favicon.svg" alt="Git Karaoke" class="access-icon" />
+			<h1 class="access-title">Git <span>Karaoke</span></h1>
+			<p class="access-subtitle">Turn your commits into music — AI-powered songs from your code history</p>
 
-			<div v-if="invalidCode" class="access-error">
-				Invalid access code. Try again or request access below.
-			</div>
+			<div v-if="invalidCode" class="access-error">Invalid code. Please try again.</div>
 
 			<form class="access-form" @submit.prevent="submitCode">
-				<label class="access-label">Access code</label>
-				<input
-					v-model="code"
-					type="password"
-					class="access-input"
-					placeholder="Enter your code"
-					autofocus
-				/>
-				<button type="submit" class="access-button">Enter</button>
+				<input v-model="code" type="password" placeholder="Enter access code" autofocus />
+				<button type="submit">→</button>
 			</form>
 
-			<div class="access-divider">
-				<span>Don't have a code?</span>
-			</div>
-
-			<a href="mailto:hello@qcdr.io?subject=Git%20Karaoke%20Demo%20Access&body=Hi!%20I%27d%20love%20access%20to%20the%20Git%20Karaoke%20demo." class="access-request-link">
-				Request demo access →
-			</a>
+			<div class="access-divider"><span>or</span></div>
+			<a href="mailto:hello@qcdr.io?subject=Git%20Karaoke%20Demo" class="access-link">Request demo access</a>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({ layout: false })
-
 const route = useRoute()
 const router = useRouter()
 const code = ref('')
 const invalidCode = computed(() => route.query.error === 'invalid')
-
 const submitCode = async () => {
 	if (!code.value.trim()) return
 	await router.push({ path: '/', query: { access: code.value.trim() } })
 }
 </script>
 
-<style scoped lang="sass">
-.access-wrapper
-	min-height: 100vh
-	display: flex
-	align-items: center
-	justify-content: center
-	padding: 1rem
-	background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)
-	font-family: 'DM Sans', 'Barlow', system-ui, sans-serif
-
-.access-card
-	background: rgba(255, 255, 255, 0.05)
-	backdrop-filter: blur(20px)
-	border: 1px solid rgba(255, 255, 255, 0.1)
-	border-radius: 20px
-	padding: 3rem 2.5rem
-	max-width: 420px
-	width: 100%
-	box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4)
-	text-align: center
-	color: #fff
-
-.access-icon
-	font-size: 3.5rem
-	margin-bottom: 0.5rem
-
-.access-title
-	font-size: 2rem
-	font-weight: 700
-	margin: 0 0 0.5rem
-	letter-spacing: -0.02em
-	background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%)
-	-webkit-background-clip: text
-	-webkit-text-fill-color: transparent
-	background-clip: text
-
-.access-subtitle
-	font-size: 0.95rem
-	opacity: 0.7
-	margin: 0 0 2rem
-
-.access-error
-	background: rgba(239, 68, 68, 0.15)
-	border: 1px solid rgba(239, 68, 68, 0.4)
-	color: #fca5a5
-	padding: 0.75rem 1rem
-	border-radius: 10px
-	font-size: 0.85rem
-	margin-bottom: 1.25rem
-
-.access-form
-	display: flex
-	flex-direction: column
-	gap: 0.75rem
-	margin-bottom: 1.5rem
-
-.access-label
-	text-align: left
-	font-size: 0.8rem
-	opacity: 0.6
-	letter-spacing: 0.05em
-	text-transform: uppercase
-
-.access-input
-	background: rgba(0, 0, 0, 0.3)
-	border: 1px solid rgba(255, 255, 255, 0.15)
-	border-radius: 10px
-	padding: 0.85rem 1rem
-	color: #fff
-	font-size: 1rem
-	outline: none
-	transition: border-color 0.2s, box-shadow 0.2s
-	&:focus
-		border-color: #8338ec
-		box-shadow: 0 0 0 3px rgba(131, 56, 236, 0.2)
-
-.access-button
-	background: linear-gradient(135deg, #ff006e 0%, #8338ec 100%)
-	color: #fff
-	border: none
-	border-radius: 10px
-	padding: 0.85rem 1rem
-	font-size: 1rem
-	font-weight: 600
-	cursor: pointer
-	transition: transform 0.15s, box-shadow 0.2s
-	&:hover
-		transform: translateY(-1px)
-		box-shadow: 0 10px 25px rgba(131, 56, 236, 0.4)
-	&:active
-		transform: translateY(0)
-
-.access-divider
-	display: flex
-	align-items: center
-	margin: 1rem 0
-	opacity: 0.4
-	font-size: 0.8rem
-	&::before, &::after
-		content: ''
-		flex: 1
-		height: 1px
-		background: rgba(255, 255, 255, 0.15)
-	& span
-		padding: 0 0.75rem
-
-.access-request-link
-	display: inline-block
-	color: #a78bfa
-	text-decoration: none
-	font-weight: 500
-	font-size: 0.95rem
-	padding: 0.5rem
-	transition: color 0.15s
-	&:hover
-		color: #c4b5fd
+<style scoped>
+.access-wrapper {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #0a0a0a;
+	font-family: 'DM Sans', 'Barlow', system-ui, sans-serif;
+	color: #fff;
+	position: relative;
+	overflow: hidden;
+}
+.access-bg {
+	position: absolute;
+	top: -20%;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 500px;
+	height: 500px;
+	background: radial-gradient(circle, rgba(145,64,251,0.1) 0%, transparent 65%);
+	border-radius: 50%;
+	pointer-events: none;
+}
+.access-card {
+	text-align: center;
+	max-width: 400px;
+	width: 100%;
+	padding: 2rem;
+	position: relative;
+	z-index: 1;
+}
+.access-icon {
+	width: 56px;
+	height: 56px;
+	margin-bottom: 1.25rem;
+}
+.access-title {
+	font-size: 2.2rem;
+	font-weight: 800;
+	margin: 0 0 0.5rem;
+	letter-spacing: -0.03em;
+}
+.access-title span { color: #9140FB; }
+.access-subtitle {
+	font-size: 0.85rem;
+	opacity: 0.35;
+	margin: 0 0 2.5rem;
+	line-height: 1.6;
+	max-width: 320px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.access-error {
+	background: rgba(145,64,251,0.1);
+	border: 1px solid rgba(145,64,251,0.25);
+	color: #b57bff;
+	padding: 10px 16px;
+	border-radius: 12px;
+	font-size: 0.82rem;
+	margin-bottom: 1rem;
+	animation: shake 0.3s ease;
+}
+@keyframes shake {
+	0%, 100% { transform: translateX(0); }
+	25% { transform: translateX(-6px); }
+	75% { transform: translateX(6px); }
+}
+.access-form {
+	display: flex;
+	border-radius: 14px;
+	overflow: hidden;
+	border: 1px solid rgba(255,255,255,0.08);
+	background: rgba(255,255,255,0.03);
+	transition: border-color 0.2s;
+}
+.access-form:focus-within { border-color: rgba(145,64,251,0.3); }
+.access-form input {
+	flex: 1;
+	padding: 14px 18px;
+	border: none;
+	background: transparent;
+	color: #fff;
+	font-size: 0.9rem;
+	outline: none;
+	font-family: inherit;
+}
+.access-form input::placeholder { color: rgba(255,255,255,0.18); }
+.access-form button {
+	padding: 14px 22px;
+	border: none;
+	background: #9140FB;
+	color: #fff;
+	cursor: pointer;
+	font-size: 1.1rem;
+	font-weight: 700;
+	transition: background 0.15s;
+}
+.access-form button:hover { background: #7c30e0; }
+.access-divider {
+	display: flex;
+	align-items: center;
+	margin: 1.25rem 0;
+	gap: 12px;
+}
+.access-divider::before, .access-divider::after {
+	content: '';
+	flex: 1;
+	height: 1px;
+	background: rgba(255,255,255,0.06);
+}
+.access-divider span {
+	font-size: 0.72rem;
+	opacity: 0.25;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}
+.access-link {
+	color: #9140FB;
+	text-decoration: none;
+	font-size: 0.85rem;
+	font-weight: 500;
+	opacity: 0.7;
+	transition: opacity 0.15s;
+}
+.access-link:hover { opacity: 1; }
 </style>
