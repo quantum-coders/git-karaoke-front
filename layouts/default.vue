@@ -88,9 +88,9 @@
 		</main>
 
 		<!-- Footer -->
-		<footer class="text-center text-white p-2 d-flex justify-content-between">
-			<small>© 2025 My Git Karaoke</small>
-			<small>By Quantum Coders</small>
+		<footer class="qc-footer">
+			<small>© 2026 Git Karaoke</small>
+			<small>Built by <a href="https://qcdr.io" target="_blank">Quantum Coders</a></small>
 		</footer>
 	</div>
 </template>
@@ -115,8 +115,19 @@
 </script>
 
 <style lang="sass" scoped>
-	footer
-		background: black
+	.qc-footer
+		background: rgba(0,0,0,0.9)
+		display: flex
+		justify-content: space-between
+		align-items: center
+		padding: 10px 20px
+		font-size: 0.72rem
+		opacity: 0.5
+		a
+			color: #9140FB
+			text-decoration: none
+			&:hover
+				text-decoration: underline
 
 	.navbar
 		position: fixed
